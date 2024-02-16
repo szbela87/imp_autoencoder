@@ -58,9 +58,9 @@ Copy the eval.py file to the appropriate output directory. Then run it in that d
 
 ```
 python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
-python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix 1
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix "model (7;64;16)-v0"
 ```
-With the first example, we write the output of the evaluation to the results.txt file. With the second call, we do not write to a file, but we also generate the confusion matrix.
+With the first example, we write the output of the evaluation to the results.txt file. With the second call, we do not write to a file, but we also generate the confusion matrix with the title "model (7;64;16)-v0".
 
 # Results
 For the reproducibility, all the saved results with the saved models can be found in the results directory.
