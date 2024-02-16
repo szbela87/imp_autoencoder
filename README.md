@@ -15,7 +15,7 @@ Please make sure you have installed Conda. Then in the base environment install 
 pip install pandas numpy seaborn
 ```
 
-The source code of the program can be found in the `imp_network` directory.
+The source code of the CUDA C program can be found in the `imp_network` directory.
 You can compile it in the following way:
 ```
 make clean
@@ -50,8 +50,8 @@ All the outputs will be created in the outputs directory.
 Copy the eval.py file to the appropriate output directory. Then run it in that directory according to the model parameters found there. Here are two examples:
 
 ```
-python eval.py --ff_opt v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
-python eval.py --ff_opt v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix 1
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix 1
 ```
 With the first example, we write the output of the evaluation to the results.txt file. With the second call, we do not write to a file, but we also generate the confusion matrix.
 
