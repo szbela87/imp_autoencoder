@@ -25,6 +25,11 @@ make
 # Dataset
 The data files can be found in the `data` directory.
 They were created with the Jupyter notebook in the same place.
+The original dataset (HTRU_2.csv) can be also downloaded from:
+
+* https://archive.ics.uci.edu/dataset/372/htru2 
+* https://www.kaggle.com/datasets/charitarth/pulsar-dataset-htru2
+
 
 # Configurations
 The autoencoder configurations can be created by `configs/create_config/conf_autoencoder.py` script.
