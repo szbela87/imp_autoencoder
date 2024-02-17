@@ -174,7 +174,6 @@ for line_ind in sorted(graph):
         activation = activations_neuron[activation_id]
         line_graph += f"{activation[0]} "
         
-        # ide kell betenni vmit
         logic_switch = int(activation[1])
         line_logic += f"{logic_switch} "
         
