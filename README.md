@@ -7,7 +7,7 @@ implicit neural networks
 # Getting Started
 
 First of all, 
-the code will be able to run with an NVIDIA graphics card, for example, a GeForce GTX 1080 is required. We tested the code on Ubuntu 20.04 operating system with a Quadro M6000 24GB graphics card. The driver version is 470.182.03, and the CUDA version is 11.4.
+the code will be able to run with an NVIDIA graphics card, for example, a GeForce GTX 1080 is required. We tested the code on Ubuntu 20.04 operating system with a Geforce GTX 1080 8GB graphics card. The driver version is 470.182.03, and the CUDA version is 11.4.
 
 Please make sure you have installed Conda. Then in the base environment install a few necessary libraries with the following command.
 ```
