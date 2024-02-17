@@ -2,7 +2,7 @@
 Evaluation script
 
 Parameters:
-- family: model family - v0, v1, v2
+- family: model family - v0, v1, v1
 - hidden_layer_num: number of the hidden layers
 - start_layer: the size of the first layer in the encoder
 - latent_num: the size of the latent layer
@@ -11,7 +11,7 @@ Parameters:
 
 Example:
 python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
-python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix 1
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix "model (7;64;16)-v0"
 """
 
 import pandas as pd

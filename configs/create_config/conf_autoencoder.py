@@ -67,6 +67,8 @@ for layer_id, hidden_num in enumerate(layers[1:-1]):
     for neuron_id in range(hidden_num):
         
         activations = add_input(activations,neuron_id = neuron_id + startind + 1,input_id = 1,act_type = act_type,modifiable=True)
+        if (layer_id + 1) == len(layers)//2 and family == "v2":
+            activations = add_input(activations,neuron_id = neuron_id + startind + 1,input_id = 2,act_type = 1,modifiable=True)
             
 # output layer
 startind = max(list(activations.keys()))
@@ -90,11 +92,19 @@ for layer in range (len(layers)-1):
             neighbor_n_id = ind_to + l + 1
             
             graph = add_neighbor(graph,neuron_id = neuron_id, neighbor_n_id = neighbor_n_id,neighbor_i_id= 1,modifiable=True)
-                
+            
+        # v2 model
+        if family == "v2" and layer == len(layers)//2:
+            neuron_id = ind_from + k + 1
+            for l in range(layers[layer]):
+                if k!=l:
+                    neighbor_n_id = ind_from + l + 1
+                    graph = add_neighbor(graph,neuron_id = neuron_id, neighbor_n_id = neighbor_n_id,neighbor_i_id=1,modifiable=True)
+                                    
     ind_from=ind_from+layers[layer]
     
-# v2 model
-if family == "v2":
+# v1 model
+if family == "v1":
     ind_start = sum(layers[:len(layers)//2])
     mlayerlen = layers[len(layers)//2]
 
@@ -102,28 +112,10 @@ if family == "v2":
         for l in range(mlayerlen):
             s_id = ind_start + k + 1
             t_id = ind_start + l + 1
-            shared_group = []    
         
             if t_id != s_id:
                 graph = add_neighbor(graph,neuron_id = s_id, neighbor_n_id = t_id,neighbor_i_id=1,modifiable=True)
-
-# v1 model
-if family == "v1":
-    ind_start = sum(layers[:len(layers)//2])
-    mlayerlen = layers[len(layers)//2]
-    
-    for k in range(mlayerlen):
-    
-        for l in range(k+1,mlayerlen):
-            s_id = ind_start + k + 1
-            t_id = ind_start + l + 1
-            shared_group = []       
-        
-            graph = add_neighbor(graph,neuron_id = s_id, neighbor_n_id = t_id,neighbor_i_id=1,modifiable=True)
-            graph = add_neighbor(graph,neuron_id = t_id, neighbor_n_id = s_id,neighbor_i_id=1,modifiable=True)
-            shared_group.append((s_id, t_id, 1))
-            shared_group.append((t_id, s_id, 1))
-            shared_weight_groups.append(shared_group)
+   
 
 #
 # Creating the shared weights file
@@ -170,8 +162,6 @@ for line_ind in sorted(graph):
         
         if (neighbor[2]==False):
             line_fixwb += f"{neighbor[3]} "
-        else:
-            trainable_2 += 1
             
     # activations
     line_graph += "### "
@@ -190,8 +180,6 @@ for line_ind in sorted(graph):
         
         if (activation[1]==False):
             line_fixwb += f"{activation[2]} "
-        else:
-            trainable_2 += 1
     
     to_file_graph.append(line_graph)
     to_file_logic.append(line_logic)
