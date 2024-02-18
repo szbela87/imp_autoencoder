@@ -41,7 +41,7 @@ Example:
 python conf_autoencoder.py --hidden_layer_num 5 --start_layer 32 --latent_num 8 --input_num 8 --act_type 9 --family v0
 ```
 
-The investigated models are in the `configs` directory.
+The investigated models are in the `configs` folder.
 
 # Training
 The training scripts can be found in the scripts directory 
@@ -50,17 +50,17 @@ corresponding to model families.
 Copy them to the `imp_network` directory.
 If you want to train the models then just simply run them.
 The filenames correspond to the model names, e.g.,
-`neural_v1_5_32_16` trains the (5;32;16)-v1 model (10 times).
+`neural_v1_5_32_16` trains the `(5;32;16)-v1` model (10 times).
 All the outputs will be created in the outputs directory.
 
 # Evaluation
-Copy the eval.py file to the appropriate output directory. Then run it in that directory according to the model parameters found there. Here are two examples:
+Copy the `eval.py` file to the appropriate output directory. Then run it in that directory according to the model parameters found there. Here are two examples:
 
 ```
 python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
 python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix "model (7;64;16)-v0"
 ```
-With the first example, we write the output of the evaluation to the results.txt file. With the second call, we do not write to a file, but we also generate the confusion matrix with the title "model (7;64;16)-v0".
+With the first example, we write the output of the evaluation to the `results.txt` file. With the second call, we do not write to a file, but we also generate the confusion matrix with the title "model (7;64;16)-v0".
 
 # Inference times
 Copy the scripts located in the scripts_inference_times directory into the `neural_imp` folder. Run them individually. For example, you can evaluate the `(5,32,8)-v0` model using the following command:
