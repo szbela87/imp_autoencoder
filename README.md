@@ -54,7 +54,7 @@ The filenames correspond to the model names, e.g.,
 All the outputs will be created in the outputs directory.
 
 # Evaluation
-Copy the `eval.py` file to the appropriate output directory. Then run it in that directory according to the model parameters found there. Here are two examples:
+Copy the `eval.py` file to the appropriate output directory. Then run it in that directory according to the model parameters found there. Here are two examples for `(7;64;16)-v0` model:
 
 ```
 python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
