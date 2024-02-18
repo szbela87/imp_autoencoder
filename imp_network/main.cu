@@ -1681,7 +1681,7 @@ int main()
                 }
                 fclose(f);
 
-                if (fabsf(error_learn) > inf / 2.0)
+                if ((fabsf(error_learn) > inf / 2.0) || (isnan(error_learn)))
                 {
                     printf("\nExploding iteration.\n");
                     save_weight_bias(save_best_model, weight_best, bias_best, neuron_num, neighbour_number, bias_number,
@@ -1710,7 +1710,7 @@ int main()
                 fclose(f_test);
             }
         }
-        if (((early_stopping > 0) && (early_stopping_counter == early_stopping)) || (fabsf(error_learn) > inf / 2.0))
+        if (((early_stopping > 0) && (early_stopping_counter == early_stopping)) || (fabsf(error_learn) > inf / 2.0) || (isnan(error_learn)))
         {
             break;
         }
