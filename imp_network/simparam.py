@@ -43,6 +43,10 @@ shared_weight_num = args.shared_weight_num # Number of the shared groups
 epochs = 20
 if args.load == 1: # just evaluation
     epochs = 0
+    
+# Creating the inputs directory
+if not os.path.exists('inputs'):
+    os.makedirs('inputs')
 
 # Creating the results directory
 if not os.path.exists('outputs'):

@@ -574,7 +574,7 @@ int main()
         }
     }
 
-    //printf("\n vmb: %.5f vstd: %.5f  vth: %.5f \n", valid_mean_best, valid_std_best, valid_th_best);
+    // printf("\n vmb: %.5f vstd: %.5f  vth: %.5f \n", valid_mean_best, valid_std_best, valid_th_best);
 
     //+++++++++++++++++++++++++//
     //                         //
@@ -800,7 +800,7 @@ int main()
         char *time_str = ctime(&mytime);
         time_str[strlen(time_str) - 1] = '\0';
         fprintf(f, "*************************************************************************************************************************************************************\n");
-        fprintf(f, "|%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s | %s \n", "ITER", "MB", "LE", "VM", "TF1", "TMCC", "BVM", "CTF1", "CTMCC", "CTACC", "CTP","CTR", "ET", time_str);
+        fprintf(f, "|%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s | %s \n", "ITER", "MB", "LE", "VM", "TF1", "TMCC", "BVM", "CTF1", "CTMCC", "CTACC", "CTP", "CTR", "ET", time_str);
         fprintf(f, "-------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     }
     else
@@ -1199,13 +1199,13 @@ int main()
 
                 if (cyclic_momentum)
                 {
-                    //if (act_step < cut)
+                    // if (act_step < cut)
                     //{
-                    //    adam_beta1_act = f_lr_momentum(act_step, max_momentum, base_momentum, cut);
-                    //}
-                    //else
+                    //     adam_beta1_act = f_lr_momentum(act_step, max_momentum, base_momentum, cut);
+                    // }
+                    // else
                     //{
-                        adam_beta1_act = f_lr_momentum(act_step - cut, base_momentum, max_momentum, all_step - cut);
+                    adam_beta1_act = f_lr_momentum(act_step - cut, base_momentum, max_momentum, all_step - cut);
                     //}
                 }
 
@@ -1681,7 +1681,7 @@ int main()
                 }
                 fclose(f);
 
-                if (fabsf(error_learn) > inf/2.0)
+                if (fabsf(error_learn) > inf / 2.0)
                 {
                     printf("\nExploding iteration.\n");
                     save_weight_bias(save_best_model, weight_best, bias_best, neuron_num, neighbour_number, bias_number,
@@ -1710,7 +1710,7 @@ int main()
                 fclose(f_test);
             }
         }
-        if (((early_stopping > 0) && (early_stopping_counter == early_stopping)) || (fabsf(error_learn) > inf/2.0))
+        if (((early_stopping > 0) && (early_stopping_counter == early_stopping)) || (fabsf(error_learn) > inf / 2.0))
         {
             break;
         }
@@ -1741,11 +1741,16 @@ int main()
     {
         cudaMemcpy(weight_g, weight, sizeof(float) * all_neighbour_num, cudaMemcpyHostToDevice);
         cudaMemcpy(bias_g, bias, sizeof(float) * all_input_num, cudaMemcpyHostToDevice);
+
+        save_weight_bias(save_best_model, weight, bias, neuron_num, neighbour_number, bias_number,
+                         first_ind_neighbour, first_ind_bias);
     }
     else
     {
         cudaMemcpy(weight_g, weight_best, sizeof(float) * all_neighbour_num, cudaMemcpyHostToDevice);
         cudaMemcpy(bias_g, bias_best, sizeof(float) * all_input_num, cudaMemcpyHostToDevice);
+        save_weight_bias(save_best_model, weight_best, bias_best, neuron_num, neighbour_number, bias_number,
+                         first_ind_neighbour, first_ind_bias);
     }
 
     // Copying back to gpu
@@ -1796,48 +1801,48 @@ int main()
 
     unsigned long long int nthreads;
 #pragma omp parallel
-                {
+    {
 
-                    unsigned long long int id = omp_get_thread_num();
+        unsigned long long int id = omp_get_thread_num();
 
-                    if (id == 0)
-                    {
-                        nthreads = omp_get_num_threads();
-                    }
+        if (id == 0)
+        {
+            nthreads = omp_get_num_threads();
+        }
 
-                    unsigned long long int t_id;
-                    unsigned long long int *valid_pred_labels = (unsigned long long int *)malloc(valid_num * sizeof(unsigned long long int));
+        unsigned long long int t_id;
+        unsigned long long int *valid_pred_labels = (unsigned long long int *)malloc(valid_num * sizeof(unsigned long long int));
 
 #pragma omp barrier
-                    for (t_id = id; t_id < (range_div + 1); t_id = t_id + nthreads)
-                    {
-                        float th = -4.0 + t_id * 8.0 / (float)(range_div);
+        for (t_id = id; t_id < (range_div + 1); t_id = t_id + nthreads)
+        {
+            float th = -4.0 + t_id * 8.0 / (float)(range_div);
 
-                        for (unsigned long long int v_id = 0; v_id < valid_num; v_id++)
-                        {
-                            if (errors_valid[v_id] > th)
-                            {
-                                valid_pred_labels[v_id] = 1;
-                            }
-                            else
-                            {
-                                valid_pred_labels[v_id] = 0;
-                            }
-                        }
-                        float tpr, fpr, f1score, accuracy, precision;
-                        // TPR, FPR, F1-score
-                        calculate_tpr_fpr_bc(valid_pred_labels, valid_labels, valid_num, &tpr, &fpr, &f1score, &accuracy, &precision);
-                        valid_fpr[t_id] = fpr;
-                        valid_tpr[t_id] = tpr;
-
-                        // MCC
-                        float mcc_th = calculate_mcc(valid_pred_labels, valid_labels, valid_num);
-
-                        mcc_list[t_id] = mcc_th;
-                        f1score_list[t_id] = f1score;
-                    }
-                    free(valid_pred_labels);
+            for (unsigned long long int v_id = 0; v_id < valid_num; v_id++)
+            {
+                if (errors_valid[v_id] > th)
+                {
+                    valid_pred_labels[v_id] = 1;
                 }
+                else
+                {
+                    valid_pred_labels[v_id] = 0;
+                }
+            }
+            float tpr, fpr, f1score, accuracy, precision;
+            // TPR, FPR, F1-score
+            calculate_tpr_fpr_bc(valid_pred_labels, valid_labels, valid_num, &tpr, &fpr, &f1score, &accuracy, &precision);
+            valid_fpr[t_id] = fpr;
+            valid_tpr[t_id] = tpr;
+
+            // MCC
+            float mcc_th = calculate_mcc(valid_pred_labels, valid_labels, valid_num);
+
+            mcc_list[t_id] = mcc_th;
+            f1score_list[t_id] = f1score;
+        }
+        free(valid_pred_labels);
+    }
 
     float v_auc = calculate_auc(valid_fpr, valid_tpr, (range_div + 1));
 
@@ -1872,15 +1877,12 @@ int main()
         }
     }
 
-  
     // Final Test metrics calculations
     float tpr, fpr, f1score, v_tpr, v_fpr, v_f1score, v_mcc, t_f1score, t_mcc, t_tpr, t_fpr;
     float v_accuracy, v_precision, t_accuracy, t_precision;
 
-
-
     calculate_tpr_fpr_bc(valid_pred_labels, valid_labels, valid_num, &v_tpr, &v_fpr, &v_f1score, &v_accuracy, &v_precision);
-    calculate_tpr_fpr_bc(test_pred_labels, test_labels, test_num, &t_tpr, &t_fpr, &t_f1score, &t_accuracy, &t_precision);   
+    calculate_tpr_fpr_bc(test_pred_labels, test_labels, test_num, &t_tpr, &t_fpr, &t_f1score, &t_accuracy, &t_precision);
 
     // MCC
     v_mcc = calculate_mcc(valid_pred_labels, valid_labels, valid_num);
@@ -1893,14 +1895,13 @@ int main()
 
     f = fopen(test_log_final, "a");
 
-
     if (f)
     {
         time_t mytime = time(NULL);
         char *time_str = ctime(&mytime);
         time_str[strlen(time_str) - 1] = '\0';
         fprintf(f, "*************************************************************************************************************************\n");
-        fprintf(f, "|%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s | %s \n", "ITER","VAUC", "VMCC", "VF1", "CTF1", "CTMCC","CTACC","CTP","CTR", "ET", time_str);
+        fprintf(f, "|%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s |%10s | %s \n", "ITER", "VAUC", "VMCC", "VF1", "CTF1", "CTMCC", "CTACC", "CTP", "CTR", "ET", time_str);
         fprintf(f, "-------------------------------------------------------------------------------------------------------------------------\n");
         fprintf(f, "|%10d |%10.6f |%10.6f |%10.6f |%10.6f |%10.6f |%10.6f |%10.6f |%10.6f |%10.2f | \n",
                 iter_grad, v_auc, v_mcc, v_f1score, t_f1score, t_mcc, t_accuracy, t_precision, t_tpr, elapsed_time + elapsed_time_2);
@@ -1911,8 +1912,6 @@ int main()
         program_failure("File write error: logile\n");
     }
     fclose(f);
-
-    
 
     // printf("\n FINAL | F1: %.5f MCC: %.5f\n", f1score, mcc_th);
 
@@ -2040,7 +2039,7 @@ int main()
     free(test_labels);
 
     free(test_pred_labels);
-    //free(valid_pred_labels);
+    // free(valid_pred_labels);
 
     free(errors_valid);
     free(errors_test);
@@ -4805,7 +4804,7 @@ void calculate_tpr_fpr_bc(unsigned long long int *predictions, unsigned long lon
 
     float precision_temp = (float)(tp) / (float)(tp + fp);
     *f1score = 2.0 * precision_temp * recall / (precision_temp + recall);
-    *accuracy = ((float)(tp) + (float)(tn))/((float)(tp)+(float)(tn)+(float)(fp)+(float)(fn));
+    *accuracy = ((float)(tp) + (float)(tn)) / ((float)(tp) + (float)(tn) + (float)(fp) + (float)(fn));
     *precision = precision_temp;
 }
 
