@@ -9,7 +9,7 @@ latent_num=8
 
 input_num=8
 neuron_num=120
-shared_weight_num=28
+shared_weight_num=0
 
 family="v1"
 
