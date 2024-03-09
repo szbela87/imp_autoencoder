@@ -27,6 +27,7 @@ A brief user manual can be found in the `doc` folder.
 # Dataset
 The data files can be found in the `data` directory.
 They were created with the Jupyter notebook in the same place.
+The resampled dataset by SMOTE algorithm can be created by `create_smote.ipynb` notebook.
 The original dataset (HTRU_2.csv) can be also downloaded from:
 
 * https://archive.ics.uci.edu/dataset/372/htru2 
