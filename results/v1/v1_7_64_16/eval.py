@@ -155,6 +155,7 @@ denominator = np.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
 # Handle division by zero
 mcc = numerator / denominator if denominator != 0 else 0.0
 
+"""
 def create_confusion_matrix(TP, TN, FP, FN, title):
     # Transposed confusion matrix creation
     confusion_matrix_transposed = np.array([[TN, FN],  # Swap FN and FP to transpose
@@ -168,6 +169,28 @@ def create_confusion_matrix(TP, TN, FP, FN, title):
     ax.xaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  # Increase font size for x-axis tick labels and rotate
     ax.yaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  # Increase font size for y-axis tick labels and rotate
     plt.tight_layout()  # Adjust the padding between and around subplots.
+    plt.savefig('confusion_matrix.png', dpi=300)  # Save the figure to a file
+    plt.show()
+"""
+def create_confusion_matrix(TP, TN, FP, FN, title):
+    # Calculate total number of observations
+    total = TP + TN + FP + FN
+    # Calculate percentages instead of counts
+    confusion_matrix_transposed_percentage = np.array([[TN / total, FN / total], 
+                                                       [FP / total, TP / total]]) * 100
+    
+    # Custom annotation format with percentage symbol
+    annot = np.array([["{:.2f}%".format(TN / total * 100), "{:.2f}%".format(FN / total * 100)], 
+                      ["{:.2f}%".format(FP / total * 100), "{:.2f}%".format(TP / total * 100)]])
+    
+    # Displaying the transposed confusion matrix in percentages with percentage symbol
+    ax = sns.heatmap(confusion_matrix_transposed_percentage, annot=annot, cmap='Blues', fmt='', annot_kws={"size": 14})  
+    ax.set_title(title, fontsize=16,fontweight='bold')  
+    ax.set_xlabel('Actual', fontsize=14, fontweight='bold')  
+    ax.set_ylabel('Predicted', fontsize=14, fontweight='bold')  
+    ax.xaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  
+    ax.yaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  
+    plt.tight_layout()  
     plt.savefig('confusion_matrix.png', dpi=300)  # Save the figure to a file
     plt.show()
 
