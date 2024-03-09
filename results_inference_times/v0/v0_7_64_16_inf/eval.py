@@ -10,8 +10,8 @@ Parameters:
 - conf_matrix: if 1 the plot the best model confusion matrix
 
 Example:
-python eval.py --ff_opt v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
-python eval.py --ff_opt v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix 1
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 > results.txt
+python eval.py --family v0 --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 8 --conf_matrix "model (7;64;16)-v0"
 """
 
 import pandas as pd
@@ -32,6 +32,7 @@ parser.add_argument('--latent_num',type=int,default=8)
 parser.add_argument('--input_num',type=int,default=8)
 parser.add_argument('--num_sims',type=int,default=10)
 parser.add_argument('--conf_matrix',type=str,default="")
+parser.add_argument('--vmetric',type=str,default="AUC")
 
 args = parser.parse_args()
 
@@ -41,6 +42,7 @@ start_layer = args.start_layer # Size of the first encoder layer
 latent_num = args.latent_num # Latent layer size
 input_num = args.input_num # Input size - also the output size
 num_sims = args.num_sims # Amount of simulations
+vmetric = args.vmetric # Validation metric
 
 ff_opt=1
 if family == "v0":
@@ -95,12 +97,12 @@ for conf_id in range(1,num_sims+1):
 data_all = np.array(data_all)
 df = pd.DataFrame(data_all, columns=columns)
 #print(columns)
-df = df.drop(["ITER","VMCC","VF1"],axis=1)
+df = df.drop(["ITER"],axis=1)
 print(f"\nThe results: \n------------\n{df}\n")
 
-max_index = df['VAUC'].idxmax()
-print(f"The index: {max_index+1} (for the best VAUC)\n-------------")
-print(f"Corresponding results to the best validation AUC:\n-------------------------------------------------\n{df.loc[max_index]}\n")
+max_index = df[f'V{vmetric}'].idxmax()
+print(f"The index: {max_index+1} (for the best V{vmetric})\n-------------")
+print(f"Corresponding results to the best validation {vmetric}:\n-------------------------------------------------\n{df.loc[max_index]}\n")
 
 results = pd.DataFrame(columns=['AVG', 'PM'])
 
