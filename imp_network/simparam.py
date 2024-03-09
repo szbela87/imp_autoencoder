@@ -27,6 +27,8 @@ parser.add_argument('--input_num',type=int,default=8)
 parser.add_argument('--neuron_num',type=int,default=248)
 parser.add_argument('--shared_weight_num',type=int,default=28)
 parser.add_argument('--load',type=int,default=0)
+parser.add_argument('--epochs',type=int,default=20)
+parser.add_argument('--minibatch_size',type=int,default=16)
 parser.add_argument('--directory',type=str,default="")
 
 args = parser.parse_args()
@@ -39,8 +41,9 @@ latent_num = args.latent_num # Latent layer size
 input_num = args.input_num # Input size - also the output size
 neuron_num = args.neuron_num # Neurons' number
 shared_weight_num = args.shared_weight_num # Number of the shared groups
+epochs=args.epochs # epochs
+minibatch_size=args.minibatch_size # mini-batch size
 
-epochs = 20
 if args.load == 1: # just evaluation
     epochs = 0
     
@@ -69,18 +72,18 @@ f"maxiter_grad               {epochs}",
 f"maxiter_fix                50",
 f"initdx                     1.0",
 f"sfreq                      11",
-f"input_name                 ../data/htru2_train.csv",
-f"input_name_valid           ../data/htru2_valid.csv",
+f"input_name                 ../data/htru2smote_train.csv",
+f"input_name_valid           ../data/htru2smote_valid.csv",
 f"input_name_test            ../data/htru2_test.csv",
 f"output_name                ./outputs/results_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{args.id}.dat",
 f"predict_name_valid         ./outputs/predict_valid_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{args.id}.dat", 
 f"predict_name_test          ./outputs/predict_test_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{args.id}.dat", 
 f"test_log                   ./outputs/test_metrics_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{args.id}.dat", 
 f"test_log_final             ./outputs/test_metrics_final_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{args.id}.dat", 
-f"learn_num                  13014",
-f"valid_num                  1790",
+f"learn_num                  13164",
+f"valid_num                  2929",
 f"test_num                   1790",
-f"mini_batch_size            32",
+f"mini_batch_size            {minibatch_size}",
 f"",
 f"neuron_num                 {neuron_num}",
 f"input_num                  {input_num}",
@@ -96,8 +99,8 @@ f"",
 f"alpha                      0.0001",
 f"",
 f"train_lossfunction_type    MSE",
-f"valid_metric_type          AUC",
-f"valid_metric_type_2        MCC",
+f"valid_metric_type          F1",
+f"valid_metric_type_2        F1",
 f"range_div                  8000",
 f"",
 f"optimizer                  1",
