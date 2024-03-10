@@ -9,9 +9,10 @@ implicit neural networks
 First of all, 
 the code will be able to run with an NVIDIA graphics card, for example, a GeForce GTX 1080 is required. We tested the code on Ubuntu 20.04 operating system with a Geforce GTX 1080 8GB graphics card. The driver version is 470.182.03, and the CUDA version is 11.4.
 
-Please make sure you have installed Conda. Then in the base environment install a few necessary libraries with the following command.
+Please make sure you have installed Conda. Then in the base environment install a few necessary libraries with the following commands.
 ```
-pip install pandas numpy seaborn scipy sklearn matplotlib
+pip install pandas numpy seaborn scipy sklearn matplotlib xgboost hyperopt 
+pip install -U imbalanced-learn
 ```
 
 The source code of the CUDA C program can be found in the `imp_network` directory.
