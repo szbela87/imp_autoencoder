@@ -33,6 +33,7 @@ parser.add_argument('--input_num',type=int,default=8)
 parser.add_argument('--num_sims',type=int,default=10)
 parser.add_argument('--conf_matrix',type=str,default="")
 parser.add_argument('--vmetric',type=str,default="AUC")
+parser.add_argument('--dataset',type=str,default="pulsar")
 
 args = parser.parse_args()
 
@@ -43,6 +44,7 @@ latent_num = args.latent_num # Latent layer size
 input_num = args.input_num # Input size - also the output size
 num_sims = args.num_sims # Amount of simulations
 vmetric = args.vmetric # Validation metric
+dataset = args.dataset # Dataset
 
 ff_opt=1
 if family == "v0":
@@ -118,9 +120,23 @@ print(f"Average results:\n----------------\n{results}\n")
 file_path = f"predict_test_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{max_index + 1}.dat"
 predict_df = pd.read_csv(file_path,sep=" ",header=None)
 predict_df = predict_df.to_numpy()[:,:-1]
-test_df = pd.read_csv("../../data/htru2_test.csv",sep=" ",header=None).to_numpy()
-X_test = test_df[:,:-1]
-y_test = test_df[:,-1]
+
+
+if dataset == "pulsar":
+    test_df = pd.read_csv("../../../data/htru2smote_test.csv",sep=" ",header=None).to_numpy()
+    X_test = test_df[:,:-1]
+    y_test = test_df[:,-1]
+
+   
+if dataset == "nsl-kdd":
+    
+    test_df = pd.read_csv("../../../data/nsl-kdd_test.csv",sep=" ",header=None).to_numpy()
+    X_test = test_df[:,:-1]
+    y_test = test_df[:,-1]
+
+    
+    
+    
 backup_path = f"backup_best_autoencoder_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}_{max_index+1}.dat"
 lines = []
 with open(backup_path, 'r') as file:
@@ -190,6 +206,9 @@ def create_confusion_matrix(TP, TN, FP, FN, title):
     ax.set_ylabel('Predicted', fontsize=14, fontweight='bold')  
     ax.xaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  
     ax.yaxis.set_ticklabels(['Non-pulsar', 'Pulsar'], fontsize=14, rotation=0)  
+    if args.dataset == "nsl-kdd":
+        ax.xaxis.set_ticklabels(['Benign', 'Attack'], fontsize=14, rotation=0)  
+        ax.yaxis.set_ticklabels(['Benign', 'Attack'], fontsize=14, rotation=0)  
     plt.tight_layout()  
     plt.savefig('confusion_matrix.png', dpi=300)  # Save the figure to a file
     plt.show()
