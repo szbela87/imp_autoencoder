@@ -1737,8 +1737,6 @@ int main()
     // weight_best <--- weights
     // bias_best <--- bias
 
-    
-
     if (loaddatas == 1)
     {
         cudaMemcpy(weight_g, weight, sizeof(float) * all_neighbour_num, cudaMemcpyHostToDevice);
@@ -1755,14 +1753,10 @@ int main()
                          first_ind_neighbour, first_ind_bias);
     }
 
-    
-
     // Copying back to gpu
 
     weight_transpose_gpu<<<(neuron_num + TPB - 1) / TPB, TPB>>>(first_ind_neighbour_g, first_ind_bias_g, first_ind_parent_g,
                                                                 neighbour_number_g, bias_number_g, parent_number_g, graph_p_g, graph_p_ind_n_g, weight_g, weight_trans_g, neuron_num);
-
-    
 
     predict(train_data, valid_data, test_data,
             mini_batch_num, mini_batch_num_valid, mini_batch_num_test, neighbour_number_g, neighbour_number, bias_number_g, bias_number,
@@ -1771,10 +1765,8 @@ int main()
             graph_p_g, graph_p_ind_n_g, weight_g, weight_trans_g, bias_g, dist_max, dist_g, dist, dist_input_g,
             dist_input, predictions_valid, predictions_test, errors_valid, errors_test);
 
-    
-
     // Saving the predictions without scaling for further work in python
-    
+
     FILE *f_predict = fopen(predict_name_valid, "w");
     if (f_predict)
     {
@@ -1788,8 +1780,7 @@ int main()
         }
     }
     fclose(f_predict);
-    
-    
+
     f_predict = fopen(predict_name_test, "w");
     if (f_predict)
     {
@@ -1803,8 +1794,6 @@ int main()
         }
     }
     fclose(f_predict);
-    
-    
 
     // Normalizing the errors_valid vector
     for (unsigned long long int v_id = 0; v_id < valid_num; v_id++)
@@ -4850,8 +4839,11 @@ float calculate_mcc(unsigned long long int *predictions, unsigned long long int 
             fn++;
         }
     }
-
-    float mcc = ((float)(tp) * (float)(tn) - (float)(fp) * (float)(fn)) / sqrtf(((float)(tp) + (float)(fp)) * ((float)(tp) + (float)(fn)) * ((float)(tn) + (float)(fp)) * ((float)(tn) + (float)(fn)));
+    float mcc = 0.0;
+    if (sqrtf(((float)(tp) + (float)(fp)) * ((float)(tp) + (float)(fn)) * ((float)(tn) + (float)(fp)) * ((float)(tn) + (float)(fn))) > 0)
+    {
+        mcc = ((float)(tp) * (float)(tn) - (float)(fp) * (float)(fn)) / sqrtf(((float)(tp) + (float)(fp)) * ((float)(tp) + (float)(fn)) * ((float)(tn) + (float)(fp)) * ((float)(tn) + (float)(fn)));
+    }
 
     return mcc;
 }
