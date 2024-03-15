@@ -979,7 +979,7 @@ int main()
             printf("\r");
             printf("%.35s", "Loading the validation data                     ");
             print_progress_bar(10, (i + 1) / (float)valid_num);
-            printf(" | %.2f%% ET: %.2fs ETA: %.2fs", (float)(i + 1) / (float)valid_num * 100, et, et / (i + 1) * test_num - et);
+            printf(" | %.2f%% ET: %.2fs ETA: %.2fs", (float)(i + 1) / (float)valid_num * 100, et, et / (i + 1) * valid_num - et);
             fflush(stdout);
 
             for (unsigned long long int j = 0; j < input_num; j++)
