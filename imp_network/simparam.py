@@ -47,9 +47,6 @@ epochs=args.epochs # epochs
 minibatch_size=args.minibatch_size # mini-batch size
 dataset = args.dataset # dataset name
 
-if args.load == 1: # just evaluation
-    epochs = 0
-    
 # Creating the inputs directory
 if not os.path.exists('inputs'):
     os.makedirs('inputs')
@@ -109,6 +106,9 @@ if dataset == "nsl-kdd":
     #valid_metric_type = "F1"
     #grad_alpha = 0.001
     #alpha=0.001
+    
+if args.load == 1: # just evaluation
+    epochs = 0
     
 print(f"Configuration: autoencoder_{family}_M{hidden_layer_num}_S{start_layer}_L{latent_num}-I{input_num}.dat")
 
