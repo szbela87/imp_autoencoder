@@ -1,5 +1,5 @@
 """
-Generating the simulparams.txt files
+Generating the simulparams.dat files
 
 Parameters:
 - id: simulation id

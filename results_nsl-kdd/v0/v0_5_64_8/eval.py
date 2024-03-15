@@ -123,14 +123,14 @@ predict_df = predict_df.to_numpy()[:,:-1]
 
 
 if dataset == "pulsar":
-    test_df = pd.read_csv("../../data/htru2smote_test.csv",sep=" ",header=None).to_numpy()
+    test_df = pd.read_csv("../../../data/htru2smote_test.csv",sep=" ",header=None).to_numpy()
     X_test = test_df[:,:-1]
     y_test = test_df[:,-1]
 
    
 if dataset == "nsl-kdd":
     
-    test_df = pd.read_csv("../../data/nsl-kdd_test.csv",sep=" ",header=None).to_numpy()
+    test_df = pd.read_csv("../../../data/nsl-kdd_test.csv",sep=" ",header=None).to_numpy()
     X_test = test_df[:,:-1]
     y_test = test_df[:,-1]
 
