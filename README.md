@@ -34,6 +34,12 @@ The original dataset (HTRU_2.csv) can be also downloaded from:
 * https://archive.ics.uci.edu/dataset/372/htru2 
 * https://www.kaggle.com/datasets/charitarth/pulsar-dataset-htru2
 
+The training/validation/testing files for the NSL-KDD dataset are created by `create_nsl_kdd_data.ipynb` notebook.
+The dataset can be downloaded from:
+
+* https://www.unb.ca/cic/datasets/nsl.html
+* https://www.kaggle.com/datasets/hassan06/nslkdd
+
 
 # Configurations
 The autoencoder configurations can be created by `configs/create_config/conf_autoencoder.py` script.
