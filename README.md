@@ -82,4 +82,4 @@ The result will be saved in `results.txt`. You will find the final results in th
 
 # Results
 For the reproducibility, all the saved results with the saved models can be found in the `results` folder in the case of the HTRU2 dataset.
-On the other hand, all inference time results and best models, predictions are available at [Google Drive](https://drive.google.com/drive/folders/1aO-cc4ESeyfuXWKX0u_2KxPf-FJJhePX?usp=sharing).
+On the other hand, all inference time results, best models, and predictions for the NSL-KDD dataset are available at [Google Drive](https://drive.google.com/drive/folders/1aO-cc4ESeyfuXWKX0u_2KxPf-FJJhePX?usp=sharing).
