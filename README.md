@@ -78,8 +78,9 @@ The output will be created in the `outputs` folder. After that, copy the `eval.p
 python eval.py --family v0 --hidden_layer_num 5 --start_layer 32 --latent_num 8 > results.txt
 python eval.py --hidden_layer_num 7 --start_layer 64 --latent_num 16 --input_num 117 --vmetric F1 --dataset nsl-kdd --family v1
 ```
-The result will be saved in `results.txt`. You will find the final results in the `results_inference_times folder`.
+The result will be saved in `results.txt`. You will find the final results  for the HTRU2 dataset in the `results_inference_times` folder.
 
 # Results
 For the reproducibility, all the saved results with the saved models can be found in the `results` folder in the case of the HTRU2 dataset.
+In the case of the NSL-KDD dataset, they are in the `results_nsl-kdd` directory.
 On the other hand, all inference time results, best models, and predictions for the NSL-KDD dataset are available at [Google Drive](https://drive.google.com/drive/folders/1aO-cc4ESeyfuXWKX0u_2KxPf-FJJhePX?usp=sharing).
