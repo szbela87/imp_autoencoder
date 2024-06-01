@@ -90,3 +90,20 @@ The result will be saved in `results.txt`. You will find the final results  for 
 For the reproducibility, all the saved results with the saved models can be found in the `results` folder in the case of the HTRU2 dataset.
 In the case of the NSL-KDD dataset, they are in the `results_nsl-kdd` directory.
 On the other hand, all inference time results, best models, and predictions for the NSL-KDD dataset are available at [Google Drive](https://drive.google.com/drive/folders/1aO-cc4ESeyfuXWKX0u_2KxPf-FJJhePX?usp=sharing).
+
+# Citing
+
+﻿@Article{Szekeres2024,
+author={Szekeres, B{\'e}la J.
+and Izs{\'a}k, Ferenc},
+title={On the computation of the gradient in implicit neural networks},
+journal={The Journal of Supercomputing},
+year={2024},
+month={Apr},
+day={25},
+abstract={Implicit neural networks and the related deep equilibrium models are investigated. To train these networks, the gradient of the corresponding loss function should be computed. Bypassing the implicit function theorem, we develop an explicit representation of this quantity, which leads to an easily accessible computational algorithm. The theoretical findings are also supported by numerical simulations.},
+issn={1573-0484},
+doi={10.1007/s11227-024-06117-6},
+url={https://doi.org/10.1007/s11227-024-06117-6}
+}
+
