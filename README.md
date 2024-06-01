@@ -93,6 +93,7 @@ On the other hand, all inference time results, best models, and predictions for 
 
 # Citing
 
+```
 ﻿@Article{Szekeres2024,
 author={Szekeres, B{\'e}la J.
 and Izs{\'a}k, Ferenc},
@@ -106,4 +107,4 @@ issn={1573-0484},
 doi={10.1007/s11227-024-06117-6},
 url={https://doi.org/10.1007/s11227-024-06117-6}
 }
-
+```
